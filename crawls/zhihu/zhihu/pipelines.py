@@ -28,6 +28,7 @@ class JsonWriterPipeline(object):
 import pymongo
 
 from scrapy.conf import settings
+from scrapy.exceptions import DropItem
 
 class MongoDBPipeline(object):
 
@@ -47,10 +48,17 @@ class MongoDBPipeline(object):
     def open_spider(self, spider):
         self.client = pymongo.MongoClient(self.mongo_uri)
         self.db = self.client[self.mongo_db]
+        self.collection = self.db[self.collection_name]
 
     def close_spider(self, spider):
         self.client.close()
 
     def process_item(self, item, spider):
-        self.db[self.collection_name].insert(dict(item))
+        matching_item = self.collection.find_one({
+            'title': item['title']
+        })
+        if matching_item is not None:
+            raise DropItem("Duplicate item found: %s" % item)
+        else:
+            self.collection.insert(dict(item))
         return item
