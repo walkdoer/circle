@@ -62,8 +62,13 @@ NEWSPIDER_MODULE = 'zhihu.spiders'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'zhihu.pipelines.JsonWriterPipeline': 300
+    'zhihu.pipelines.JsonWriterPipeline': 100,
+    'zhihu.pipelines.MongoDBPipeline': 800
 }
+
+MONGO_URI = "localhost:27017"
+MONGO_DATABASE = "circle"
+MONGO_COLLECTION = "zhihu_explore"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
