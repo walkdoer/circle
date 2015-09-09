@@ -55,10 +55,10 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         matching_item = self.collection.find_one({
-            'title': item['title']
+            'atoken': item['atoken']
         })
         if matching_item is not None:
-            raise DropItem("Duplicate item found: %s" % item)
+            raise DropItem("Duplicate item found: %s" % item['atoken'])
         else:
             self.collection.insert(dict(item))
         return item

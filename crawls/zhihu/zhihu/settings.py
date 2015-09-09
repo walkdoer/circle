@@ -62,7 +62,7 @@ NEWSPIDER_MODULE = 'zhihu.spiders'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'zhihu.pipelines.JsonWriterPipeline': 100,
+    #'zhihu.pipelines.JsonWriterPipeline': 100,
     'zhihu.pipelines.MongoDBPipeline': 800
 }
 

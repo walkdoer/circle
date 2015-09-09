@@ -36,7 +36,10 @@ class ExplorSpider(scrapy.Spider):
             href = link.xpath('@href').extract()[0]
             title = link.xpath('text()').extract()[0]
             url = response.urljoin(href)
-            yield scrapy.Request(url, callback = lambda response, title=title: self.parse_dir_contents(response, title))
+            if href:
+                tmp_arr = href.split('/')
+                question_id = tmp_arr[2]
+            yield scrapy.Request(url, callback = lambda response, title=title, question_id=question_id: self.parse_dir_contents(response, title, question_id))
 
         if len(links) < PAGE_SIZE:
             print "!!!!!done"
@@ -47,16 +50,22 @@ class ExplorSpider(scrapy.Spider):
             self.pageNum += 1
             yield scrapy.Request(request_url, self.parse)
 
-    def parse_dir_contents(self, response, title):
+    def parse_dir_contents(self, response, title, question_id):
 
         answers = response.css(".zh-question-answer-wrapper")
         for answer in answers:
             item = ZhihuItem()
+            target_answer = answers.css('.zm-item-answer')
+            answer_token = target_answer.xpath('@data-atoken').extract()[0]
+            answer_id = target_answer.xpath('@data-aid').extract()[0]
             author = answer.css('.zm-item-answer-author-wrap a:nth-child(2)::text').extract()
             if author:
                 author = author[0]
             else:
                 author = '--'
+            item['qid'] = question_id
+            item['aid'] = answer_id
+            item['atoken'] = answer_token
             item['title'] = title
             item['agreeCount'] = answer.css('.count::text').extract()[0]
             item['author'] = author
