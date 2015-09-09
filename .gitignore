@@ -1,3 +1,6 @@
 crawls/zhihu/.idea/
 
 crawls/zhihu/**/*.pyc
+
+node_modules
+dist
