@@ -2,8 +2,7 @@
 __author__ = 'andrew'
 import scrapy
 import json
-
-from zhihu.items import ZhihuItem
+from ..items import ZhihuItem
 
 
 class ExplorSpider(scrapy.Spider):

@@ -32,15 +32,15 @@ from scrapy.exceptions import DropItem
 
 class MongoDBPipeline(object):
 
-    collection_name = settings['MONGO_COLLECTION']
-
-    def __init__(self, mongo_uri, mongo_db):
+    def __init__(self, collection_name, mongo_uri, mongo_db):
         self.mongo_uri = mongo_uri
         self.mongo_db = mongo_db
+        self.collection_name = collection_name
 
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
+            collection_name= crawler.settings.get('MONGO_COLLECTION'),
             mongo_uri=crawler.settings.get('MONGO_URI'),
             mongo_db=crawler.settings.get('MONGO_DATABASE', 'circle')
         )
