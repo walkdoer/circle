@@ -1,6 +1,11 @@
-crawls/zhihu/.idea/
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 
-crawls/zhihu/**/*.pyc
-
+build
 node_modules
-dist
+ncp-debug.log
+npm-debug.log
+
+crawls/.idea
+crawls/zhihu/.idea/
+crawls/zhihu/**/*.pyc

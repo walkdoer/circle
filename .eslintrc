@@ -1,16 +1,10 @@
 {
-    "ecmaFeatures": {
-        "modules": true,
-        "blockBindings": true,
-        "forOf": true,
-        "jsx": true
-    },
-    "env": {
-        "browser": true,
-        "node": true,
-        "es6": true
-    },
-    "rules": {
-        "strict": 0
-    }
+  "extends": "airbnb",
+  "globals": {
+    "__DEV__": true
+  },
+  "rules": {
+    "react/jsx-quotes": 0,
+    "jsx-quotes": [2, "prefer-double"]
+  }
 }
